@@ -1,6 +1,6 @@
 toastLog('本程序使用 Auto.js Pro 制作，由 Hollis(his2nd.life) 在 JiyeHoo 的 Auto-Daily-Clock 程序基础上修改而来。');
 $settings.setEnabled('foreground_service', true);
-toastLog('请确保已忽略电池优化，已启用前台服务，已启用对应的无障碍服务，已赋予悬浮窗、后台弹出界面权限。');
+toastLog('请确保已忽略电池优化，已启用前台服务，已启用对应的无障碍服务，已赋予悬浮窗、常驻通知、后台弹出界面、读写手机储存等权限。');
 while (!$power_manager.isIgnoringBatteryOptimizations())
     $power_manager.requestIgnoreBatteryOptimizations();
 while (!$floaty.checkPermission())
@@ -34,7 +34,7 @@ setInterval(() => {
     if (new Date().toTimeString().substring(0, 5) == runAt.toTimeString().substring(0, 5))
         FillIn();
 }, 1000);
-toastLog('启动测试，如向您请求启动，请允许。');
+toastLog('运行启动测试，如向您请求启动，请允许。');
 launch('com.alibaba.android.rimet');
 waitForPackage('com.alibaba.android.rimet');
 home();
@@ -106,7 +106,7 @@ function FillIn() {
     var submitBtn = text('提交').findOne(5000);
     if (submitBtn) {
         submitBtn.click();
-        toastLog('填报完成');
+        toastLog('填报完成。');
     }
     else {
         toast('未找到“提交”，填报失败。');
