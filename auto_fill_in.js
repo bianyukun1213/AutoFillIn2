@@ -48,7 +48,7 @@ function FillIn() {
         device.wakeUp();
         swipe(device.width / 2, device.height, device.width / 2, device.height / 2, 100);
     }
-    device.keepScreenDim(5 * 60 * 1000)
+    device.keepScreenDim(5 * 60 * 1000);
     launch('com.alibaba.android.rimet');
     waitForPackage('com.alibaba.android.rimet');
     var item = id('home_app_recycler_view').findOne(5000);
@@ -57,6 +57,7 @@ function FillIn() {
     else {
         toast('未找到“工作台”，填报失败。');
         console.error('未找到“工作台”，填报失败。');
+        device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
         running = false;
@@ -69,6 +70,7 @@ function FillIn() {
     else {
         toast('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
         console.error('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
+        device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
         running = false;
@@ -82,6 +84,7 @@ function FillIn() {
     } else {
         toast('未找到“今天”，填报失败。');
         console.error('未找到“今天”，填报失败。');
+        device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
         running = false;
@@ -94,6 +97,7 @@ function FillIn() {
     } else {
         toast('未找到“获取”，填报失败。');
         console.error('未找到“获取”，填报失败。');
+        device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
         running = false;
@@ -109,6 +113,7 @@ function FillIn() {
         console.error('未找到“提交”，填报失败。');
         app.startActivity('console');
     }
+    device.cancelKeepingAwake();
     complete = true;
     running = false;
     return;
