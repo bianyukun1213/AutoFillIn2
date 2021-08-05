@@ -1,6 +1,6 @@
 toastLog('本程序使用 Auto.js Pro 制作，由 Hollis(his2nd.life) 在 JiyeHoo 的 Auto-Daily-Clock 程序基础上修改而来。');
 $settings.setEnabled('foreground_service', true);
-toastLog('请确保已忽略电池优化，已启用前台服务，已启用对应的无障碍服务，已赋予悬浮窗权限。');
+toastLog('请确保已忽略电池优化，已启用前台服务，已启用对应的无障碍服务，已赋予悬浮窗、后台弹出界面权限。');
 while (!$power_manager.isIgnoringBatteryOptimizations())
     $power_manager.requestIgnoreBatteryOptimizations();
 while (!$floaty.checkPermission())
@@ -15,18 +15,18 @@ if (typeof storage.get('runAt') == 'undefined')
     storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
 var running = false;
 var complete = false;
-rawInput('自动填报时间：', storage.get('runAt').hour + ':' + storage.get('runAt').minute, input => {
+rawInput('填报时间（小时与分钟均用两位数字表示）：', storage.get('runAt').hour + ':' + storage.get('runAt').minute, input => {
     if (new RegExp(/^(?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]$/).test(input)) {
         runAt.setHours(input.split(':')[0]);
-        if (input == '00:00')
-            runAt.setMinutes(1);
+        if (input == '00:00' || input == new Date().toTimeString().substring(0, 5))
+            runAt.setMinutes(parseInt(input.split(':')[1]) + 1);
         else
             runAt.setMinutes(input.split(':')[1]);
     }
     else
         toastLog('时间格式不正确，将使用默认值。');
     storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
-    toastLog('设置自动填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
+    toastLog('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
 });
 setInterval(() => {
     if (new Date().toTimeString().substring(0, 5) == '00:00')
@@ -38,6 +38,7 @@ toastLog('启动测试，如向您请求启动，请允许。');
 launch('com.alibaba.android.rimet');
 waitForPackage('com.alibaba.android.rimet');
 home();
+toastLog('等待。');
 function FillIn() {
     if (running || complete)
         return;
@@ -47,13 +48,16 @@ function FillIn() {
         device.wakeUp();
         swipe(device.width / 2, device.height, device.width / 2, device.height / 2, 100);
     }
+    device.keepScreenDim(5 * 60 * 1000)
     launch('com.alibaba.android.rimet');
     waitForPackage('com.alibaba.android.rimet');
     var item = id('home_app_recycler_view').findOne(5000);
     if (item)
         item.children()[2].click();
     else {
-        toastLog('未找到“工作台”。');
+        toast('未找到“工作台”，填报失败。');
+        console.error('未找到“工作台”，填报失败。');
+        app.startActivity('console');
         complete = true;
         running = false;
         return;
@@ -63,7 +67,9 @@ function FillIn() {
     if (fillInBtn)
         fillInBtn.click();
     else {
-        toastLog('未找到“黑龙江科技大学2021年暑期学生健康数据填报”。');
+        toast('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
+        console.error('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
+        app.startActivity('console');
         complete = true;
         running = false;
         return;
@@ -74,7 +80,9 @@ function FillIn() {
         todayBtn.click();
         sleep(2000);
     } else {
-        toastLog('未找到“今天”。');
+        toast('未找到“今天”，填报失败。');
+        console.error('未找到“今天”，填报失败。');
+        app.startActivity('console');
         complete = true;
         running = false;
         return;
@@ -84,7 +92,9 @@ function FillIn() {
         acquireBtn.click();
         sleep(2000);
     } else {
-        toastLog('未找到“获取”。');
+        toast('未找到“获取”，填报失败。');
+        console.error('未找到“获取”，填报失败。');
+        app.startActivity('console');
         complete = true;
         running = false;
         return;
@@ -94,8 +104,11 @@ function FillIn() {
         submitBtn.click();
         toastLog('填报完成');
     }
-    else
-        toastLog('未找到“提交”。');
+    else {
+        toast('未找到“提交”，填报失败。');
+        console.error('未找到“提交”，填报失败。');
+        app.startActivity('console');
+    }
     complete = true;
     running = false;
     return;
