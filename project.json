@@ -6,7 +6,7 @@
         "LICENSE",
         "README.md"
     ],
-    "encryptLevel": 0,
+    "encryptLevel": 3,
     "optimization": {
         "removeOpenCv": true,
         "unusedResources": true
@@ -17,6 +17,7 @@
     },
     "permissionConfig": {
         "manifestPermissions": [
+            "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.FOREGROUND_SERVICE",
             "android.permission.GET_TASKS",
@@ -27,7 +28,11 @@
             "android.permission.WAKE_LOCK",
             "android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND",
             "android.permission.RUN_IN_BACKGROUND",
-            "android.permission.RECEIVE_BOOT_COMPLETED"
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            "android.permission.ACCESS_NETWORK_STATE",
+            "android.permission.INTERNET",
+            "android.permission.REQUEST_COMPANION_USE_DATA_IN_BACKGROUND",
+            "android.permission.USE_DATA_IN_BACKGROUND"
         ],
         "requestListOnStartup": [
             "android.permission.WRITE_EXTERNAL_STORAGE"

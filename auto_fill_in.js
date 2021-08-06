@@ -10,12 +10,13 @@ function ToastError(input) {
     toast(input);
     console.error(input);
 }
-var w = floaty.window(
-    <frame gravity="center">
-        <text id="text">auto_fill_in.js 运行中。</text>
+var w = floaty.rawWindow(
+    <frame gravity="center" bg="#1E90FF" alpha="0.5">
+        <text id="text" textColor="white">auto_fill_in.js 正在运行。</text>
     </frame>
 );
-var storage = storages.create('bianyukun1213@outlook.com:auto_fill_in');
+w.setTouchable(false);
+var storage = storages.create('life.his2nd.autofillin2');
 var runAt = new Date();
 runAt.setHours(7);
 runAt.setMinutes(0);
@@ -55,7 +56,9 @@ function FillIn() {
     ToastInfo('开始填报。');
     if (!device.isScreenOn()) {
         device.wakeUp();
+        sleep(2000);
         swipe(device.width / 2, device.height, device.width / 2, device.height / 2, 100);
+        sleep(2000);
     }
     device.keepScreenDim(5 * 60 * 1000);
     launch('com.alibaba.android.rimet');
