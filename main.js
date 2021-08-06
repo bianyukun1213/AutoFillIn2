@@ -2,7 +2,6 @@ function ToastInfo(input) {
     toast(input);
     console.info(input);
 }
-console.clear();
 ToastInfo('本程序使用 Auto.js Pro 制作，由 Hollis(his2nd.life) 在 JiyeHoo 的 Auto-Daily-Clock 程序基础上修改而来。');
 $settings.setEnabled('foreground_service', true);
 $settings.setEnabled('stop_all_on_volume_up', false);
