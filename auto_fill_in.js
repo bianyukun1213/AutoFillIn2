@@ -1,11 +1,20 @@
-toastLog('本程序使用 Auto.js Pro 制作，由 Hollis(his2nd.life) 在 JiyeHoo 的 Auto-Daily-Clock 程序基础上修改而来。');
-$settings.setEnabled('foreground_service', true);
-toastLog('请确保已取消锁屏密码，已忽略电池优化，已启用前台服务，已启用对应的无障碍服务，已赋予悬浮窗、常驻通知、后台弹出界面、读写手机储存等权限，钉钉语言已设置为简体中文。');
-while (!$power_manager.isIgnoringBatteryOptimizations())
-    $power_manager.requestIgnoreBatteryOptimizations();
-while (!$floaty.checkPermission())
-    $floaty.requestPermission();
-auto.waitFor();
+function ToastInfo(input) {
+    toast(input);
+    console.info(input);
+}
+function ToastWarn(input) {
+    toast(input);
+    console.warn(input);
+}
+function ToastError(input) {
+    toast(input);
+    console.error(input);
+}
+var w = floaty.window(
+    <frame gravity="center">
+        <text id="text">auto_fill_in.js 运行中。</text>
+    </frame>
+);
 var storage = storages.create('bianyukun1213@outlook.com:auto_fill_in');
 var runAt = new Date();
 runAt.setHours(7);
@@ -24,9 +33,9 @@ rawInput('填报时间（小时与分钟均用两位数字表示）：', storage
             runAt.setMinutes(input.split(':')[1]);
     }
     else
-        toastLog('时间格式不正确，将使用默认值。');
+        ToastWarn('时间格式不正确，将使用默认值。');
     storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
-    toastLog('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
+    ToastInfo('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
 });
 setInterval(() => {
     if (new Date().toTimeString().substring(0, 5) == '00:00')
@@ -43,7 +52,7 @@ function FillIn() {
     if (running || complete)
         return;
     running = true;
-    toastLog('开始填报。');
+    ToastInfo('开始填报。');
     if (!device.isScreenOn()) {
         device.wakeUp();
         swipe(device.width / 2, device.height, device.width / 2, device.height / 2, 100);
@@ -55,8 +64,7 @@ function FillIn() {
     if (item)
         item.children()[2].click();
     else {
-        toast('未找到“工作台”，填报失败。');
-        console.error('未找到“工作台”，填报失败。');
+        ToastError('未找到“工作台”，填报失败。');
         device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
@@ -68,8 +76,7 @@ function FillIn() {
     if (fillInBtn)
         fillInBtn.click();
     else {
-        toast('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
-        console.error('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
+        ToastError('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
         device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
@@ -82,8 +89,7 @@ function FillIn() {
         todayBtn.click();
         sleep(2000);
     } else {
-        toast('未找到“今天”，填报失败。');
-        console.error('未找到“今天”，填报失败。');
+        ToastError('未找到“今天”，填报失败。');
         device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
@@ -95,8 +101,7 @@ function FillIn() {
         acquireBtn.click();
         sleep(2000);
     } else {
-        toast('未找到“获取”，填报失败。');
-        console.error('未找到“获取”，填报失败。');
+        ToastError('未找到“获取”，填报失败。');
         device.cancelKeepingAwake();
         app.startActivity('console');
         complete = true;
@@ -106,11 +111,10 @@ function FillIn() {
     var submitBtn = text('提交').findOne(5000);
     if (submitBtn) {
         submitBtn.click();
-        toastLog('填报完成。');
+        ToastInfo('填报完成。');
     }
     else {
-        toast('未找到“提交”，填报失败。');
-        console.error('未找到“提交”，填报失败。');
+        ToastError('未找到“提交”，填报失败。');
         app.startActivity('console');
     }
     device.cancelKeepingAwake();

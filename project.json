@@ -1,0 +1,40 @@
+{
+    "name": "钉钉自动填报",
+    "main": "main.js",
+    "ignore": [
+        "build",
+        "LICENSE",
+        "README.md"
+    ],
+    "encryptLevel": 0,
+    "optimization": {
+        "removeOpenCv": true,
+        "unusedResources": true
+    },
+    "launchConfig": {
+        "splashIcon": "icon.png",
+        "splashText": "Made by Hollis(his2nd.life)."
+    },
+    "permissionConfig": {
+        "manifestPermissions": [
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.FOREGROUND_SERVICE",
+            "android.permission.GET_TASKS",
+            "android.permission.PERSISTENT_ACTIVITY",
+            "android.permission.REORDER_TASKS",
+            "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
+            "android.permission.SYSTEM_ALERT_WINDOW",
+            "android.permission.WAKE_LOCK",
+            "android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND",
+            "android.permission.RUN_IN_BACKGROUND",
+            "android.permission.RECEIVE_BOOT_COMPLETED"
+        ],
+        "requestListOnStartup": [
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+        ]
+    },
+    "icon": "icon.png",
+    "packageName": "life.his2nd.autofillin2",
+    "versionName": "1.0.0",
+    "versionCode": 1
+}
