@@ -10,12 +10,6 @@ function ToastError(input) {
     toast(input);
     console.error(input);
 }
-var w = floaty.rawWindow(
-    <frame gravity="center" bg="#1E90FF" alpha="0.5">
-        <text id="text" textColor="white">auto_fill_in.js 正在运行。</text>
-    </frame>
-);
-w.setTouchable(false);
 var storage = storages.create('life.his2nd.autofillin2');
 var runAt = new Date();
 runAt.setHours(7);
@@ -38,6 +32,8 @@ rawInput('填报时间（小时与分钟均用两位数字表示）：', storage
     storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
     ToastInfo('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
 });
+var w = floaty.rawWindow('<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="text" textColor="white">auto_fill_in.js 正在运行，将于 '+ runAt.toTimeString().substring(0, 5) +' 填报。</text></frame>');
+w.setTouchable(false);
 setInterval(() => {
     if (new Date().toTimeString().substring(0, 5) == '00:00')
         complete = false;

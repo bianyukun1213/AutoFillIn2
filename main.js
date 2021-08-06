@@ -23,7 +23,7 @@ if (res.statusCode != 200) {
 }
 var storage = storages.create('life.his2nd.autofillin2');
 if (storage.get('firstRun') != false) {
-    ToastInfo('这是您首次运行此程序，请先阅读手册。');
+    ToastInfo('这是您首次运行本程序，请先阅读手册。');
     app.openUrl('https://his2nd.life/technologies/5c3f7b01.html');
     storage.put('firstRun', false);
     engines.stopAll();
@@ -33,7 +33,7 @@ console.info('本程序使用 Auto.js Pro 制作，由 Hollis(his2nd.life) 在 J
 ToastInfo('使用前请阅读手册：https://his2nd.life/technologies/5c3f7b01.html。');
 $settings.setEnabled('foreground_service', true);
 $settings.setEnabled('stop_all_on_volume_up', false);
-ToastInfo('请确保已取消锁屏密码，已忽略电池优化，已启用前台服务，已启用无障碍服务，已赋予悬浮窗、自启动、常驻通知、后台弹出界面、读写手机储存等权限，钉钉语言已设置为简体中文，程序自动操作时无人工干预。');
+ToastInfo('请确保已取消锁屏密码，已忽略电池优化，已启用前台服务，已启用无障碍服务，已赋予悬浮窗、自启动、常驻通知、后台弹出界面、读写手机存储等权限，钉钉语言已设置为简体中文，程序操作前钉钉处于关闭状态，程序操作时无人工干预。');
 console.info('强行停止本程序后，可能需要重新启用无障碍服务。');
 while (!$power_manager.isIgnoringBatteryOptimizations())
     $power_manager.requestIgnoreBatteryOptimizations();
