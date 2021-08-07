@@ -60,8 +60,10 @@ function FillIn() {
     launch('com.alibaba.android.rimet');
     waitForPackage('com.alibaba.android.rimet');
     var item = id('home_app_recycler_view').findOne(5000);
-    if (item)
+    if (item) {
         item.children()[2].click();
+        sleep(2000);
+    }
     else {
         ToastError('未找到“工作台”，填报失败。');
         device.cancelKeepingAwake();
@@ -72,8 +74,10 @@ function FillIn() {
     }
     var fillInBtn = className('android.view.View').text('黑龙江科技大学2021年暑期学生健康数据填报')
         .findOne(5000);
-    if (fillInBtn)
+    if (fillInBtn) {
         fillInBtn.click();
+        sleep(2000);
+    }
     else {
         ToastError('未找到“黑龙江科技大学2021年暑期学生健康数据填报”，填报失败。');
         device.cancelKeepingAwake();
