@@ -70,7 +70,6 @@ if (scripts.length > 2)
             item.forceStop();
 if (scripts.length < 2)
     engines.execScript(scriptName, script);
-
 scripts = engines.all();
 for (item of scripts) {
     var tmp = item.getSource().toString().split('/');
