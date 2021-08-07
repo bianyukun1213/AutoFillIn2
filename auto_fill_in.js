@@ -32,7 +32,7 @@ rawInput('填报时间（小时与分钟均用两位数字表示）：', storage
     storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
     ToastInfo('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
 });
-var w = floaty.rawWindow('<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="text" textColor="white">auto_fill_in.js 正在运行，将于 '+ runAt.toTimeString().substring(0, 5) +' 填报。</text></frame>');
+var w = floaty.rawWindow('<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="text" textColor="white">' + engines.myEngine().getSource().toString().split('/')[engines.myEngine().getSource().toString().split('/').length - 1] + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 填报。</text></frame>');
 w.setTouchable(false);
 setInterval(() => {
     if (new Date().toTimeString().substring(0, 5) == '00:00')
@@ -43,7 +43,7 @@ setInterval(() => {
 toastLog('运行启动测试，如向您请求启动，请允许。');
 launch('com.alibaba.android.rimet');
 waitForPackage('com.alibaba.android.rimet');
-home();
+app.startActivity('console');
 toastLog('等待。');
 function FillIn() {
     if (running || complete)

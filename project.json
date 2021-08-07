@@ -3,6 +3,7 @@
     "main": "main.js",
     "ignore": [
         "build",
+        "auto_fill_in.js",
         "LICENSE",
         "README.md"
     ],
@@ -40,6 +41,6 @@
     },
     "icon": "icon.png",
     "packageName": "life.his2nd.autofillin2",
-    "versionName": "1.0.1",
-    "versionCode": 2
+    "versionName": "1.0.2",
+    "versionCode": 3
 }
