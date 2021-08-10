@@ -9,7 +9,7 @@ function ToastError(input) {
 }
 var statusTexts = [];
 events.broadcast.on('respondStatusText', (r) => {
-    var index = statusTexts.indexOf(r);
+    var index = statusTexts.findIndex(i => i.name == r.name);
     if (index === -1)
         statusTexts.push(r);
     else
@@ -76,9 +76,11 @@ if (storage.get('requestMorePermissions') !== false) {
 }
 if (currentPackage() !== 'life.his2nd.autofillin2')
     app.startActivity('console');
-var w = floaty.rawWindow('<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="status" textColor="white"></text></frame>');
+var w = floaty.rawWindow(<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="status" textColor="white"></text></frame>);
 w.setTouchable(false);
 setInterval(() => {
+    var sta = context.resources.configuration.orientation;
+    sta === 2 ? ui.run(() => { w.status.visibility = 8 }) : ui.run(() => { w.status.visibility = 0 });
     var scripts = engines.all();
     if (scripts.length > 2)
         for (item of scripts)
