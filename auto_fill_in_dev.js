@@ -20,7 +20,7 @@ function SetTimer() {
                 runAt.setMinutes(input.split(':')[1]);
         }
         else
-            ToastWarn('时间格式不正确，将使用默认值 07:00。');
+            ToastWarn('时间格式不正确，将使用默认值 07:00 或最后一次正确设置的值。');
         complete = false;
         storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
         ToastInfo('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
@@ -53,7 +53,7 @@ w.icon.visibility = 8;
 w.icon.click(function () {
     SetTimer();
 });
-ToastInfo('点击沙漏图标以设置填报时间，如不设置，将使用默认值 07:00。');
+ToastInfo('点击沙漏图标以设置填报时间，如不设置，将使用默认值 07:00 或最后一次正确设置的值。');
 setInterval(() => {
     var sta = context.resources.configuration.orientation;
     sta === 2 ? ui.run(() => { w.icon.visibility = 8 }) : ui.run(() => { w.icon.visibility = 0 });
