@@ -10,19 +10,26 @@ function ToastError(input) {
     toast(input);
     console.error(input);
 }
+events.broadcast.on('requestStatusText', () => {
+    var n = engines.myEngine().getSource().toString().split('/')[engines.myEngine().getSource().toString().split('/').length - 1];
+    events.broadcast.emit('respondStatusText', {
+        name: n,
+        text: n + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 自动填报。'
+    });
+});
 var storage = storages.create('life.his2nd.autofillin2');
 var runAt = new Date();
 runAt.setHours(7);
 runAt.setMinutes(0);
 runAt.setSeconds(0);
-if (typeof storage.get('runAt') == 'undefined')
+if (typeof storage.get('runAt') === 'undefined')
     storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
 var running = false;
 var complete = false;
 rawInput('填报时间（小时与分钟均用两位数字表示）：', storage.get('runAt').hour + ':' + storage.get('runAt').minute, input => {
     if (new RegExp(/^(?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]$/).test(input)) {
         runAt.setHours(input.split(':')[0]);
-        if (input == '00:00' || input == new Date().toTimeString().substring(0, 5))
+        if (input === '00:00' || input === new Date().toTimeString().substring(0, 5))
             runAt.setMinutes(parseInt(input.split(':')[1]) + 1);
         else
             runAt.setMinutes(input.split(':')[1]);
@@ -32,12 +39,11 @@ rawInput('填报时间（小时与分钟均用两位数字表示）：', storage
     storage.put('runAt', { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) });
     ToastInfo('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
 });
-var w = floaty.rawWindow('<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="text" textColor="white">' + engines.myEngine().getSource().toString().split('/')[engines.myEngine().getSource().toString().split('/').length - 1] + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 填报。</text></frame>');
-w.setTouchable(false);
+console.log('如果您要重新设置填报时间，请打开“音量上键停止所有脚本”，然后按下音量上键并重新启动本程序。');
 setInterval(() => {
-    if (new Date().toTimeString().substring(0, 5) == '00:00')
+    if (new Date().toTimeString().substring(0, 5) === '00:00')
         complete = false;
-    if (new Date().toTimeString().substring(0, 5) == runAt.toTimeString().substring(0, 5))
+    if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5))
         FillIn();
 }, 1000);
 toastLog('运行启动测试，如向您请求启动，请允许。');
