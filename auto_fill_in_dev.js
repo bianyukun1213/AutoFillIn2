@@ -40,13 +40,13 @@ function setTimer() {
         toastInfo('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
     });
 }
-events.broadcast.on('requestStatusText', () => {
-    let n = engines.myEngine().getSource().toString().split('/')[engines.myEngine().getSource().toString().split('/').length - 1];
-    events.broadcast.emit('respondStatusText', {
-        name: n,
-        text: n + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 填报。'
-    });
-});
+// events.broadcast.on('requestStatusText', () => {
+//     let n = engines.myEngine().getSource().toString().split('/')[engines.myEngine().getSource().toString().split('/').length - 1];
+//     events.broadcast.emit('respondStatusText', {
+//         name: n,
+//         text: n + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 填报。'
+//     });
+// });
 let storage = storages.create('life.his2nd.autofillin2');
 let runAt = new Date();
 runAt.setHours(7);

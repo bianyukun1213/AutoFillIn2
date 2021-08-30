@@ -7,14 +7,14 @@ function toastError(input) {
     toast(input);
     console.error(input);
 }
-let statusTexts = [];
-events.broadcast.on('respondStatusText', (r) => {
-    let index = statusTexts.findIndex(i => i.name == r.name);
-    if (index === -1)
-        statusTexts.push(r);
-    else
-        statusTexts[index] = r;
-});
+// let statusTexts = [];
+// events.broadcast.on('respondStatusText', (r) => {
+//     let index = statusTexts.findIndex(i => i.name == r.name);
+//     if (index === -1)
+//         statusTexts.push(r);
+//     else
+//         statusTexts[index] = r;
+// });
 //
 const DEV = false;
 //
@@ -98,11 +98,11 @@ if (storage.get('requestMorePermissions') !== false) {
 }
 if (currentPackage() !== 'life.his2nd.autofillin2')
     app.startActivity('console');
-let w = floaty.rawWindow(<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="status" textColor="white"></text></frame>);
-w.setTouchable(false);
+// let w = floaty.rawWindow(<frame gravity="center" bg="#1E90FF" alpha="0.5"><text id="status" textColor="white"></text></frame>);
+// w.setTouchable(false);
 setInterval(() => {
-    let sta = context.resources.configuration.orientation;
-    sta === 2 ? ui.run(() => { w.status.visibility = 8 }) : ui.run(() => { w.status.visibility = 0 });
+    // let sta = context.resources.configuration.orientation;
+    // sta === 2 ? ui.run(() => { w.status.visibility = 8 }) : ui.run(() => { w.status.visibility = 0 });
     scripts = engines.all();
     if (scripts.length > 2)
         for (let item of scripts)
@@ -110,21 +110,25 @@ setInterval(() => {
                 item.forceStop();
     if (scripts.length < 2)
         DEV ? engines.execScriptFile('auto_fill_in_dev.js') : engines.execScript(scriptName, script);
-    events.broadcast.emit('requestStatusText');
-    let text = '';
-    scripts = engines.all();
-    for (let item of scripts) {
-        let name = item.getSource().toString().split('/')[item.getSource().toString().split('/').length - 1];
-        let found = false;
-        for (let it of statusTexts)
-            if (it.name === name) {
-                found = true;
-                text += it.text + '\n';
-                break;
-            }
-        if (!found)
-            text += name + ' 正在运行。\n';
-    }
-    text = text.substring(0, text.length - 1);
-    ui.run(() => { w.status.setText(text); });
+    // events.broadcast.emit('requestStatusText');
+    // let text = '';
+    // scripts = engines.all();
+    // for (let item of scripts) {
+    //     let name = item.getSource().toString().split('/')[item.getSource().toString().split('/').length - 1];
+    //     let found = false;
+    //     for (let it of statusTexts)
+    //         if (it.name === name) {
+    //             found = true;
+    //             text += it.text + '\n';
+    //             break;
+    //         }
+    //     if (!found)
+    //         text += name + ' 正在运行。\n';
+    // }
+    // text = text.substring(0, text.length - 1);
+    // ui.run(() => { w.status.setText(text); });
 }, 1000);
+for (let item of scripts){
+    let name = item.getSource().toString().split('/')[item.getSource().toString().split('/').length - 1];
+    console.log(name+' 正在运行。');
+}
