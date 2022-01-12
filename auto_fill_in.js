@@ -21,7 +21,7 @@ function toastError(input) {
     console.error(input);
 }
 function setTimer() {
-    rawInput('填报时间,手机号码,途经省市：', getFullNum(runAt.getHours()) + ':' + getFullNum(runAt.getMinutes()) + ',' + phone + ',' + track, input => {
+    rawInput('填报时间,手机号码,途经省市', getFullNum(runAt.getHours()) + ':' + getFullNum(runAt.getMinutes()) + ',' + phone + ',' + track, input => {
         if (input === null)
             return;
         let params = input.split(',');
@@ -54,7 +54,7 @@ function setTimer() {
             else
                 toastWarn('时间格式不正确，将使用默认值 07:00 或最后一次正确设置的值。');
             let phoneInput = params[1];
-            if (new RegExp(/^[1][3|4|5|7|8][0-9]{9}$/).test(phoneInput)) {
+            if (new RegExp(/^[1][3|4|5|7|8][0-9]{1}([0-9]{4}|\*{4})[0-9]{4}$/).test(phoneInput)) {
                 phone = phoneInput;
             }
             else

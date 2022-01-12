@@ -33,7 +33,7 @@ if (!net && typeof net !== 'undefined' && net !== 0 || !net.isAvailable()) {
     exit();
 }
 console.log('正在检查更新。');
-let res = http.get('https://1499374354759535.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/AutoFillIn2/GetLatest/');
+let res = http.get('https://apps.hollisdevhub.com/projects/afi2/updates/config.json');
 if (res.statusCode !== 200) {
     toastError('检查更新失败：' + res.statusCode + ' - “' + res.statusMessage + '”，结束运行。');
     engines.stopAll();
@@ -78,7 +78,7 @@ if (storage.get('firstRun') !== false) {
     exit();
 }
 console.log('本程序使用 Auto.js Pro 制作，由 Hollis(his2nd.life) 在 JiyeHoo 的 Auto-Daily-Clock 程序基础上修改而来。');
-toastInfo('使用前请阅读手册：https://his2nd.life/technologies/5c3f7b01.html，使用时需自负风险。');
+toastInfo('请先阅读手册：https://his2nd.life/technologies/5c3f7b01.html，使用须自负风险。');
 $settings.setEnabled('foreground_service', true);
 $settings.setEnabled('stop_all_on_volume_up', false);
 console.log('强行停止本程序后，可能需要重新启用无障碍服务。');
@@ -89,7 +89,7 @@ while (!$floaty.checkPermission())
 auto.waitFor();
 if (storage.get('requestMorePermissions') !== false) {
     storage.put('requestMorePermissions', false);
-    let c = confirm('赋予更多权限', '注意：本提示仅显示一次。\n部分手机系统如 MIUI、ColorOS、FuntouchOS 设置了“后台弹出界面”或类似权限。本程序需要该权限以在后台启动钉钉，需要“自启动”权限以保持运行。\n如果您要赋予这些权限，请点击“确认”以结束运行，方便您进行操作；否则，请点击“取消”。');
+    let c = confirm('赋予更多权限', '注意：本提示仅显示一次。\n部分手机系统如 MIUI、ColorOS、FuntouchOS 设置了“后台弹出界面”或类似权限。本程序需要该权限以在后台启动钉钉，需要“自启动”权限以保持运行。\n如果您要赋予这些权限，请点击“确定”以结束运行，方便您进行操作；否则，请点击“取消”。');
     if (c) {
         toastLog('结束运行。');
         engines.stopAll();
@@ -109,7 +109,7 @@ setInterval(() => {
             if (item.getSource().toString().indexOf('main.js') === -1)
                 item.forceStop();
     if (scripts.length < 2)
-        DEV ? engines.execScriptFile('auto_fill_in_dev.js') : engines.execScript(scriptName, script);
+        DEV ? engines.execScriptFile('auto_fill_in.js') : engines.execScript(scriptName, script);
     // events.broadcast.emit('requestStatusText');
     // let text = '';
     // scripts = engines.all();
