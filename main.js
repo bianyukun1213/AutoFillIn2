@@ -1,4 +1,7 @@
 importClass(android.net.ConnectivityManager);
+//
+const DEV = false;
+//
 function toastInfo(input) {
     toast(input);
     console.info(input);
@@ -15,9 +18,6 @@ function toastError(input) {
 //     else
 //         statusTexts[index] = r;
 // });
-//
-const DEV = false;
-//
 let script = '';
 let scriptName = '';
 let scriptLog = '';
@@ -78,7 +78,7 @@ if (storage.get('firstRun') !== false) {
     exit();
 }
 console.log('本程序使用 Auto.js Pro 制作，由 Hollis(his2nd.life) 在 JiyeHoo 的 Auto-Daily-Clock 程序基础上修改而来。');
-toastInfo('使用前请阅读手册：https://his2nd.life/technologies/5c3f7b01.html。');
+toastInfo('使用前请阅读手册：https://his2nd.life/technologies/5c3f7b01.html，使用时需自负风险。');
 $settings.setEnabled('foreground_service', true);
 $settings.setEnabled('stop_all_on_volume_up', false);
 console.log('强行停止本程序后，可能需要重新启用无障碍服务。');
