@@ -161,9 +161,9 @@ function fillIn() {
     toastInfo('开始填报。');
     if (!device.isScreenOn()) {
         device.wakeUp();
-        sleep(2000);
-        swipe(device.width / 2, device.height, device.width / 2, device.height / 2, 100);
-        sleep(2000);
+        sleep(5000);
+        swipe(device.width / 2, device.height - 300, device.width / 2, 300, 500);
+        sleep(5000);
     }
     device.keepScreenDim(5 * 60 * 1000);
     toastInfo('开始生成行程卡图片，建议使用思源黑体作为系统默认字体。');
@@ -222,7 +222,7 @@ function fillIn() {
     let item = id('home_app_recycler_view').findOne(5000);
     if (item) {
         item.children()[2].click();
-        sleep(2000);
+        sleep(5000);
     }
     else {
         toastError('未找到“工作台”，填报失败。');
@@ -236,7 +236,7 @@ function fillIn() {
         .findOne(5000);
     if (fillInBtn) {
         fillInBtn.click();
-        sleep(2000);
+        sleep(5000);
     }
     else {
         toastError('未找到“黑龙江科技大学寒假学生健康信息填报”，填报失败。');
@@ -250,7 +250,7 @@ function fillIn() {
         .findOne(5000);
     if (todayBtn) {
         todayBtn.click();
-        sleep(2000);
+        sleep(5000);
     }
     else {
         toastError('未找到“今天”，填报失败。');
@@ -261,10 +261,11 @@ function fillIn() {
         return;
     }
     if (DEV) {
+    // if (false) {
         let editBtn = text('修改').findOne(5000);
         if (editBtn) {
             editBtn.click();
-            sleep(2000);
+            sleep(5000);
         }
         else {
             toastError('未找到“修改”，填报失败。');
@@ -277,7 +278,7 @@ function fillIn() {
         let uploadBtn = text('重新上传').findOne(5000);
         if (uploadBtn) {
             uploadBtn.click();
-            sleep(2000);
+            sleep(5000);
         }
         else {
             toastError('未找到“重新上传”，填报失败。');
@@ -289,10 +290,10 @@ function fillIn() {
         }
     }
     else {
-        let uploadBtn = text('plus').findOne(5000);
+        let uploadBtn = className('android.widget.Image').text('plus').findOne(5000);
         if (uploadBtn) {
             uploadBtn.click();
-            sleep(2000);
+            sleep(5000);
         }
         else {
             toastError('未找到图片上传按钮，填报失败。');
@@ -302,37 +303,37 @@ function fillIn() {
             running = false;
             return;
         }
-    }
-    let imgCheckBox = desc('未选中').findOne(5000);
-    if (imgCheckBox) {
-        imgCheckBox.click();
-        sleep(2000);
-    }
-    else {
-        toastError('未找到图片多选框，填报失败。');
-        device.cancelKeepingAwake();
-        app.startActivity('console');
-        complete = true;
-        running = false;
-        return;
-    }
-    let sendBtn = text('发送(1)').findOne(5000);
-    if (sendBtn) {
-        sendBtn.click();
-        sleep(2000);
-    }
-    else {
-        toastError('未找到“发送(1)”，填报失败。');
-        device.cancelKeepingAwake();
-        app.startActivity('console');
-        complete = true;
-        running = false;
-        return;
+        let imgCheckBox = desc('未选中').findOne(5000);
+        if (imgCheckBox) {
+            imgCheckBox.click();
+            sleep(5000);
+        }
+        else {
+            toastError('未找到图片多选框，填报失败。');
+            device.cancelKeepingAwake();
+            app.startActivity('console');
+            complete = true;
+            running = false;
+            return;
+        }
+        let sendBtn = text('发送(1)').findOne(5000);
+        if (sendBtn) {
+            sendBtn.click();
+            sleep(5000);
+        }
+        else {
+            toastError('未找到“发送(1)”，填报失败。');
+            device.cancelKeepingAwake();
+            app.startActivity('console');
+            complete = true;
+            running = false;
+            return;
+        }
     }
     let acquireBtn = text('获取').findOne(5000);
     if (acquireBtn) {
         acquireBtn.click();
-        sleep(2000);
+        sleep(5000);
     }
     else {
         toastError('未找到“获取”，填报失败。');
