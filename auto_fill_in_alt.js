@@ -15,14 +15,36 @@ function ajpUnlock() {
             return true;
         }
     }));
-    // print(app.versionName);
-    // let list = selector().find();
-    // for (var i = 0; i < list.size(); i++) {
-    //     var object = list.get(i);
-    //     if (object.text() !== '') {
-    //         print(object.text());
-    //     }
-    // }
+}
+function verifySettings(settings) {
+    if (typeof settings === 'undefined')
+        return false;
+    if (typeof settings.runAt === 'undefined')
+        return false;
+    let h = settings.runAt.hour;
+    let m = settings.runAt.minute;
+    if (typeof h === 'undefined')
+        return false;
+    if (typeof m === 'undefined')
+        return false;
+    let intH = parseInt(h);
+    let intM = parseInt(m);
+    if (isNaN(intH))
+        return false;
+    if (isNaN(intM))
+        return false;
+    let d = new Date();
+    d.setHours(intH);
+    d.setMinutes(intM);
+    if (isNaN(d.getTime()))
+        return false;
+    if (typeof userName === 'undefined')
+        return false;
+    if (typeof userId === 'undefined')
+        return false;
+    if (typeof userGroupName === 'undefined')
+        return false;
+    return true;
 }
 function getFullNum(num) {
     if (num > 9)
@@ -116,8 +138,10 @@ runAt.setSeconds(0);
 let userName = '拜登';
 let userId = '110101194211207956';
 let userGroupName = '相亲相爱一家人';
-if (typeof settings === 'undefined')
+if (!verifySettings(settings)) {
     storage.put('settings', { runAt: { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) }, userName: userName, userId: userId, userGroupName: userGroupName });
+    toastError('设置项校验未通过，已重置。');
+}
 else {
     let h = parseInt(settings.runAt.hour);
     let m = parseInt(settings.runAt.minute);

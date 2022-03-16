@@ -2,6 +2,48 @@ importClass(android.graphics.Typeface);
 //
 const DEV = false;
 //
+function ajpUnlock() {
+    console.log('解锁 Auto.js Pro……');
+    importClass(com.stardust.autojs.core.accessibility.AccessibilityBridge.WindowFilter);
+    let bridge = runtime.accessibilityBridge;
+    let bridgeField = runtime.getClass().getDeclaredField('accessibilityBridge');
+    let configField = bridgeField.getType().getDeclaredField('mConfig');
+    configField.setAccessible(true);
+    configField.set(bridge, configField.getType().newInstance());
+    bridge.setWindowFilter(new JavaAdapter(AccessibilityBridge$WindowFilter, {
+        filter: function (info) {
+            return true;
+        }
+    }));
+}
+function verifySettings(settings) {
+    if (typeof settings === 'undefined')
+        return false;
+    if (typeof settings.runAt === 'undefined')
+        return false;
+    let h = settings.runAt.hour;
+    let m = settings.runAt.minute;
+    if (typeof h === 'undefined')
+        return false;
+    if (typeof m === 'undefined')
+        return false;
+    let intH = parseInt(h);
+    let intM = parseInt(m);
+    if (isNaN(intH))
+        return false;
+    if (isNaN(intM))
+        return false;
+    let d = new Date();
+    d.setHours(intH);
+    d.setMinutes(intM);
+    if (isNaN(d.getTime()))
+        return false;
+    if (typeof phone === 'undefined')
+        return false;
+    if (typeof track === 'undefined')
+        return false;
+    return true;
+}
 function getFullNum(num) {
     if (num > 9)
         return num.toString();
@@ -78,6 +120,7 @@ function setTimer() {
 //         text: n + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 填报。'
 //     });
 // });
+ajpUnlock();
 let storage = storages.create('life.his2nd.autofillin2');
 let settings = storage.get('settings');
 let runAt = new Date();
@@ -86,8 +129,10 @@ runAt.setMinutes(0);
 runAt.setSeconds(0);
 let phone = '13456765431';
 let track = '黑龙江省哈尔滨市';
-if (typeof settings === 'undefined')
+if (!verifySettings(settings)) {
     storage.put('settings', { runAt: { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) }, phone: phone, track: track });
+    toastError('设置项校验未通过，已重置。');
+}
 else {
     let h = parseInt(settings.runAt.hour);
     let m = parseInt(settings.runAt.minute);
@@ -261,7 +306,7 @@ function fillIn() {
         return;
     }
     if (DEV) {
-    // if (false) {
+        // if (false) {
         let editBtn = text('修改').findOne(5000);
         if (editBtn) {
             editBtn.click();
