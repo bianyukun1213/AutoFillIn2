@@ -65,7 +65,7 @@ function toastError(input) {
     console.error(input);
 }
 function setTimer() {
-    rawInput('填报时间,姓名,身份证号,发送群名', getFullNum(runAt.getHours()) + ':' + getFullNum(runAt.getMinutes()) + ',' + userName + ',' + userId + ',' + userGroupName, input => {
+    rawInput('时间,姓名,身份证号,发送群名', getFullNum(runAt.getHours()) + ':' + getFullNum(runAt.getMinutes()) + ',' + userName + ',' + userId + ',' + userGroupName, input => {
         if (input === null)
             return;
         let params = input.split(',');
@@ -118,14 +118,14 @@ function setTimer() {
         }
         complete = false;
         storage.put('settings', { runAt: { hour: runAt.toTimeString().substring(0, 2), minute: runAt.toTimeString().substring(3, 5) }, userName: userName, userId: userId, userGroupName: userGroupName });
-        toastInfo('设置填报时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
+        toastInfo('设置时间为 ' + runAt.toTimeString().substring(0, 5) + '。');
     });
 }
 // events.broadcast.on('requestStatusText', () => {
 //     let n = engines.myEngine().getSource().toString().split('/')[engines.myEngine().getSource().toString().split('/').length - 1];
 //     events.broadcast.emit('respondStatusText', {
 //         userName: n,
-//         text: n + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 填报。'
+//         text: n + ' 正在运行，将于 ' + runAt.toTimeString().substring(0, 5) + ' 。'
 //     });
 // });
 ajpUnlock();
@@ -194,7 +194,7 @@ let w = DEV ? floaty.rawWindow(
 w.setPosition(device.width - 128, device.height / 2);
 w.setTouchable(true);
 w.icon.click(function () { setTimer(); });
-toastInfo('点击齿轮图标以设置填报参数，如不设置，将使用默认值或最后一次正确设置的值。');
+toastInfo('点击齿轮图标以设置参数，如不设置，将使用默认值或最后一次正确设置的值。');
 setInterval(() => {
     let sta = context.resources.configuration.orientation;
     sta === 2 ? ui.run(() => { w.icon.visibility = 8 }) : ui.run(() => { w.icon.visibility = 0 });
