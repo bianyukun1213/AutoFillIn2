@@ -200,8 +200,8 @@ setInterval(() => {
     sta === 2 ? ui.run(() => { w.icon.visibility = 8 }) : ui.run(() => { w.icon.visibility = 0 });
     if (new Date().toTimeString().substring(0, 5) === '00:00')
         complete = false;
-    if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5))
-        //if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5) || DEV)
+    //if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5))
+    if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5) || DEV)
         fillIn();
 }, 1000);
 if (storage.get('scriptFirstRun') !== false) {
@@ -254,13 +254,14 @@ function fillIn() {
     let paintTime = new Paint();
     paintTime.setAntiAlias(true);
     paintTime.setTextSize(40);
+    paintTime.setTextAlign(Paint.Align.RIGHT);
     let dt = new Date();
-    canvas.drawText(dt.getFullYear().toString() + '年' + getFullNum(dt.getMonth() + 1) + '月' + getFullNum(dt.getDate()) + '日 ' + getFullNum(dt.getHours()) + ':' + getFullNum(dt.getMinutes()) + ':', 302, 811, paintTime);
+    canvas.drawText(dt.getFullYear().toString() + '年' + getFullNum(dt.getMonth() + 1) + '月' + getFullNum(dt.getDate()) + '日 ' + getFullNum(dt.getHours()) + ':' + getFullNum(dt.getMinutes()) + ':', 712, 811, paintTime);
     let paintTime2 = new Paint();
     paintTime2.setAntiAlias(true);
     paintTime2.setTextSize(50);
     paintTime2.setTypeface(Typeface.DEFAULT_BOLD);
-    canvas.drawText(getFullNum(dt.getSeconds()), 722, 811, paintTime2);
+    canvas.drawText(getFullNum(dt.getSeconds()), 712, 811, paintTime2);
     let savePath = files.getSdcardPath() + '/AutoFillIn2/';
     files.ensureDir(savePath);
     let final = canvas.toImage();
