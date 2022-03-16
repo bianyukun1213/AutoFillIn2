@@ -27,22 +27,22 @@ function verifySettings(settings) {
         return false;
     if (typeof m === 'undefined')
         return false;
-    let intH = parseInt(h);
-    let intM = parseInt(m);
+    let intH = parseInt(h, 10);
+    let intM = parseInt(m, 10);
     if (isNaN(intH))
         return false;
     if (isNaN(intM))
         return false;
     let d = new Date();
-    d.setHours(intH);
-    d.setMinutes(intM);
+    d.setHours(intH, 10);
+    d.setMinutes(intM, 10);
     if (isNaN(d.getTime()))
         return false;
-    if (typeof userName === 'undefined')
+    if (typeof settings.userName === 'undefined')
         return false;
-    if (typeof userId === 'undefined')
+    if (typeof settings.userId === 'undefined')
         return false;
-    if (typeof userGroupName === 'undefined')
+    if (typeof settings.userGroupName === 'undefined')
         return false;
     return true;
 }
@@ -77,7 +77,7 @@ function setTimer() {
             if (new RegExp(/^(?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]$/).test(timeInput)) {
                 runAt.setHours(timeInput.split(':')[0]);
                 if (timeInput === '00:00')
-                    runAt.setMinutes(parseInt(timeInput.split(':')[1]) + 1);
+                    runAt.setMinutes(parseInt(timeInput.split(':')[1], 10) + 1);
                 else if (timeInput === new Date().toTimeString().substring(0, 5)) {
                     if (timeInput.substring(3, 5) === '59') {
                         if (timeInput === '23:59') {
@@ -85,12 +85,12 @@ function setTimer() {
                             runAt.setMinutes(1);
                         }
                         else {
-                            runAt.setHours(parseInt(timeInput.split(':')[0]) + 1);
+                            runAt.setHours(parseInt(timeInput.split(':')[0], 10) + 1);
                             runAt.setMinutes(0);
                         }
                     }
                     else
-                        runAt.setMinutes(parseInt(timeInput.split(':')[1]) + 1);
+                        runAt.setMinutes(parseInt(timeInput.split(':')[1], 10) + 1);
                 }
                 else
                     runAt.setMinutes(timeInput.split(':')[1]);
@@ -143,11 +143,11 @@ if (!verifySettings(settings)) {
     toastError('设置项校验未通过，已重置。');
 }
 else {
-    let h = parseInt(settings.runAt.hour);
-    let m = parseInt(settings.runAt.minute);
+    let h = parseInt(settings.runAt.hour, 10);
+    let m = parseInt(settings.runAt.minute, 10);
     let now = new Date().toTimeString().substring(0, 5);
-    let hNow = parseInt(now.split(':')[0]);
-    let mNow = parseInt(now.split(':')[1]);
+    let hNow = parseInt(now.split(':')[0], 10);
+    let mNow = parseInt(now.split(':')[1], 10);
     if (h === hNow && m === mNow) {
         if (m === 59) {
             if (h === 23) {
@@ -200,8 +200,8 @@ setInterval(() => {
     sta === 2 ? ui.run(() => { w.icon.visibility = 8 }) : ui.run(() => { w.icon.visibility = 0 });
     if (new Date().toTimeString().substring(0, 5) === '00:00')
         complete = false;
-    //if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5))
-    if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5) || DEV)
+    if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5))
+        //if (new Date().toTimeString().substring(0, 5) === runAt.toTimeString().substring(0, 5) || DEV)
         fillIn();
 }, 1000);
 if (storage.get('scriptFirstRun') !== false) {
