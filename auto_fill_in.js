@@ -237,7 +237,7 @@ function fillIn() {
     paintTrackTitle.setAntiAlias(true);
     paintTrackTitle.setTextSize(48);
     paintTrackTitle.setColor(colors.parseColor('#94949e'));
-    canvas.drawText('您于前14天内到达或途经：', 124, 1513, paintTrackTitle);
+    canvas.drawText('您于前7天内到达或途经：', 124, 1513, paintTrackTitle);
     let paintTrackContent = new Paint();
     paintTrackContent.setAntiAlias(true);
     paintTrackContent.setTextSize(48);
